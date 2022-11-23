@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -10,6 +11,25 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core-ui" />
+            <option value="$PROJECT_DIR$/movies_details" />
+            <option value="$PROJECT_DIR$/movies_details/movies_details_data" />
+            <option value="$PROJECT_DIR$/movies_details/movies_details_domain" />
+            <option value="$PROJECT_DIR$/movies_details/movies_details_presentation" />
+            <option value="$PROJECT_DIR$/movies_favorites" />
+            <option value="$PROJECT_DIR$/movies_favorites/movies_favorites_data" />
+            <option value="$PROJECT_DIR$/movies_favorites/movies_favorites_domain" />
+            <option value="$PROJECT_DIR$/movies_favorites/movies_favorites_presentation" />
+            <option value="$PROJECT_DIR$/movies_list" />
+            <option value="$PROJECT_DIR$/movies_list/movies_list_data" />
+            <option value="$PROJECT_DIR$/movies_list/movies_list_domain" />
+            <option value="$PROJECT_DIR$/movies_list/movies_list_presentation" />
+            <option value="$PROJECT_DIR$/movies_search" />
+            <option value="$PROJECT_DIR$/movies_search/movies_search_data" />
+            <option value="$PROJECT_DIR$/movies_search/movies_search_domain" />
+            <option value="$PROJECT_DIR$/movies_search/movies_search_presentation" />
           </set>
         </option>
       </GradleProjectSettings>
