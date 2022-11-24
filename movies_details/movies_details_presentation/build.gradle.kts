@@ -7,5 +7,7 @@ dependencies {
     "implementation"(project(Modules.coreUI))
     "implementation"(project(Modules.moviesDetailsDomain))
 
+    "implementation"(project(Modules.repositoryRemote))
+
     "implementation"(Coil.coilCompose)
 }

@@ -30,6 +30,11 @@
             <option value="$PROJECT_DIR$/movies_search/movies_search_data" />
             <option value="$PROJECT_DIR$/movies_search/movies_search_domain" />
             <option value="$PROJECT_DIR$/movies_search/movies_search_presentation" />
+            <option value="$PROJECT_DIR$/repository" />
+            <option value="$PROJECT_DIR$/repository/repository_locale_db" />
+            <option value="$PROJECT_DIR$/repository/repository_remote" />
+            <option value="$PROJECT_DIR$/repository/retrofit" />
+            <option value="$PROJECT_DIR$/repository/roomdb" />
           </set>
         </option>
       </GradleProjectSettings>

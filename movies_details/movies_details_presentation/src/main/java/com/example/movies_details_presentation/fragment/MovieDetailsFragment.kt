@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.movies_details_presentation.databinding.FragmentMoviesDetailsBinding
 import com.example.movies_details_presentation.viewModel.MoviesDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieDetailsFragment: Fragment() {
     private lateinit var historyViewModel: MoviesDetailsViewModel
 

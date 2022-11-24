@@ -21,5 +21,10 @@ object Modules {
     const val moviesSearchDomain = ":movies_search:movies_search_domain"
     const val moviesSearchPresentation = ":movies_search:movies_search_presentation"
 
+    const val repositoryLocaleDb = ":repository:repository_locale_db"
+    const val repositoryRoomDb = ":repository:roomdb"
+    const val repositoryRemote = ":repository:repository_remote"
+    const val repositoryRetrofit = ":repository:retrofit"
+
 
 }
