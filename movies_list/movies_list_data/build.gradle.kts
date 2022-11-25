@@ -8,6 +8,8 @@ dependencies {
     "implementation"(project(Modules.core))
     "implementation"(project(Modules.moviesListDomain))
 
+    "implementation"(project(Modules.repositoryRemote))
+
     "implementation"(Retrofit.okHttp)
     "implementation"(Retrofit.retrofit)
     "implementation"(Retrofit.okHttpLoggingInterceptor)

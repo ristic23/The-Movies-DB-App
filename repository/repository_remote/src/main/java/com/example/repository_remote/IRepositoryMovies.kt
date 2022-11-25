@@ -1,11 +1,13 @@
 package com.example.repository_remote
 
-import com.example.retrofit.dto.RetrofitMovies
+import com.example.core.dtoMovies.Movies
+import com.example.core.dtoMovies.detailMovie.DetailsMovie
+
 interface IRepositoryMovies {
 
-    suspend fun getTopRatedMovies(): List<RetrofitMovies>
+    suspend fun getTopRatedMovies(): Movies
 
-    suspend fun getMoviesDetails(moviesId: Int)
+    suspend fun getMovieDetails(moviesId: Int): DetailsMovie
 
     suspend fun searchMovies()
 

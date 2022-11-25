@@ -1,7 +1,10 @@
 package com.example.movies_list_presentation.viewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.dtoMovies.Movies
 import com.example.repository_remote.IRepositoryMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,12 +16,17 @@ class MoviesListViewModel @Inject constructor(
     private val repositoryMovies: IRepositoryMovies
 ): ViewModel()
 {
+    private val moviesResult = MutableLiveData<Movies>()
+    val moviesResultLiveData: LiveData<Movies> get() = moviesResult
 
-    fun getMovies() {
+    init {
+        getMovies()
+    }
+
+    private fun getMovies() {
         viewModelScope.launch {
-
-            val response = repositoryMovies.getTopRatedMovies()
-            val response2 = repositoryMovies.getTopRatedMovies()
+            val topRated = repositoryMovies.getTopRatedMovies()
+            moviesResult.postValue(topRated)
         }
     }
 

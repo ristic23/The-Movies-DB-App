@@ -8,6 +8,8 @@ object Compose {
     const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
     const val compiler = "androidx.compose.compiler:compiler:$composeCompilerVersion"
 
+    const val composeLiveData = "androidx.compose.runtime:runtime-livedata:$composeCompilerVersion"
+
     private const val hiltNavigationComposeVersion = "1.0.0-beta01"
     const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion"
 

@@ -2,6 +2,9 @@ package com.example.retrofit
 
 import com.example.retrofit.dto.RetrofitMovie
 import com.example.retrofit.dto.RetrofitMovies
+import com.example.retrofit.dto.detailMovie.RetrofitDetailsMovie
+import com.example.retrofit.util.BASE_URL
+import com.example.retrofit.util.MOVIES_API_KEY
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
@@ -14,52 +17,100 @@ class RetrofitController @Inject constructor(
 )
 {
 
-    suspend fun getTopRatedMovies(): List<RetrofitMovies> {
+    suspend fun getTopRatedMovies(): RetrofitMovies {
         return  try {
-            val response = iRetrofit.getTopRatedMovies()
+            val response = iRetrofit.getTopRatedMovies(
+                "${BASE_URL}top_rated?api_key=$MOVIES_API_KEY&language=en-US&page=1"
+            )
             if(response.isSuccessful)
             {
-//                val moshi: Moshi = Moshi.Builder().build()
-//                val type: Type = Types.newParameterizedType(MutableList::class.java, RetrofitMovies::class.java)
-//                val jsonAdapter: JsonAdapter<RetrofitMovies> = moshi.adapter(type)
+                val moshi: Moshi = Moshi.Builder().build()
+                val type: Type = Types.newParameterizedType(RetrofitMovies::class.java, RetrofitMovies::class.java)
+                val jsonAdapter: JsonAdapter<RetrofitMovies> = moshi.adapter(type)
                 response.body()?.let {
-                   return it
+                    val responseString = it.string()
+                    val finalResult: RetrofitMovies = jsonAdapter.fromJson(responseString) ?: RetrofitMovies()
+                    return finalResult
                 }
-
-                listOf()
+                RetrofitMovies()
             }
             else
             {
-                listOf()
+                RetrofitMovies()
             }
         }
         catch (e: Exception)
         {
             e.printStackTrace()
-            listOf()
+            RetrofitMovies()
         }
-
     }
 
-    suspend fun getMoviesDetails(moviesId: Int): RetrofitMovie {
-        val result = iRetrofit.getMoviesDetails(moviesId = moviesId)
-        return RetrofitMovie(
-            false,
-            "",
-            listOf(),
-            0,
-            "",
-            "",
-            "",
-            0.0,
-            "",
-            "",
-            "",
-            false,
-            0.0,
-            0
+    suspend fun getMoviesDetails(moviesId: Int): RetrofitDetailsMovie {
+        return  try {
+            val response = iRetrofit.getMoviesDetails(
+                "${BASE_URL}$moviesId?api_key=$MOVIES_API_KEY&language=en-US"
             )
+            if(response.isSuccessful)
+            {
+                val moshi: Moshi = Moshi.Builder().build()
+                val type: Type = Types.newParameterizedType(RetrofitDetailsMovie::class.java, RetrofitDetailsMovie::class.java)
+                val jsonAdapter: JsonAdapter<RetrofitDetailsMovie> = moshi.adapter(type)
+                response.body()?.let {
+                    val responseString = it.string()
+                    val finalResult: RetrofitDetailsMovie = jsonAdapter.fromJson(responseString) ?: emptyRetrofitDetailMovie()
+                    return finalResult
+                }
+                emptyRetrofitDetailMovie()
+            }
+            else
+            {
+                emptyRetrofitDetailMovie()
+            }
+        }
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+            emptyRetrofitDetailMovie()
+        }
     }
+
+    private fun emptyRetrofitMovie(): RetrofitMovie = RetrofitMovie(
+        false,
+        "",
+        listOf(),
+        0,
+        "",
+        "",
+        "",
+        0.0,
+        "",
+        "",
+        "",
+        false,
+        0.0,
+        0
+    )
+    private fun emptyRetrofitDetailMovie(): RetrofitDetailsMovie = RetrofitDetailsMovie(
+        "",
+        0,
+        listOf(),
+        0,
+        "",
+        "",
+        "",
+        0.0,
+        "",
+        "",
+        0,
+        0,
+        "",
+        "",
+        "",
+        0.0,
+        0
+    )
+
 
     suspend fun searchMovies(query: String): List<RetrofitMovies> {
         val result = iRetrofit.searchMovies(query =  query)

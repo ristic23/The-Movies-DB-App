@@ -26,10 +26,14 @@ android {
             isMinifyEnabled = false
         }
     }
+    dataBinding {
+        isEnabled = true
+    }
     buildFeatures {
         compose = true
         viewBinding  = true
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -50,6 +54,7 @@ android {
 
 dependencies {
     implementation(Compose.compiler)
+    implementation(Compose.composeLiveData)
     implementation(Compose.ui)
     implementation(Compose.uiToolingPreview)
     implementation(Compose.hiltNavigationCompose)
@@ -83,6 +88,9 @@ dependencies {
     implementation(project(Modules.moviesSearchData))
     implementation(project(Modules.moviesSearchDomain))
     implementation(project(Modules.moviesSearchPresentation))
+
+    implementation(project(Modules.repositoryRemote))
+    implementation(project(Modules.repositoryRetrofit))
 
     implementation(AndroidX.coreKtx)
     implementation(AndroidX.appCompat)

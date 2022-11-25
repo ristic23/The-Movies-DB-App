@@ -8,6 +8,7 @@ dependencies {
     "implementation"(project(Modules.moviesDetailsDomain))
 
     "implementation"(project(Modules.repositoryRemote))
+    "implementation"(project(Modules.repositoryRetrofit))
 
     "implementation"(Coil.coilCompose)
 }
