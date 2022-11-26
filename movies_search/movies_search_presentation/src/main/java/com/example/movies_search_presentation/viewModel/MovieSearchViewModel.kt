@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.dtoMovies.Movies
+import com.example.core.dtoMovies.favorite.MovieFavorite
 import com.example.repository_remote.IRepositoryMovies
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,9 +17,6 @@ import javax.inject.Inject
 class MovieSearchViewModel @Inject constructor(
     private val repositoryMovies: IRepositoryMovies
 ): ViewModel() {
-
-    private val  isMovieInFavorites = MutableStateFlow(false)
-    val isMovieInFavoritesFlow: StateFlow<Boolean> get() = isMovieInFavorites
 
     private var currentQuery = ""
 

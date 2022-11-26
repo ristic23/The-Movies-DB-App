@@ -58,8 +58,7 @@ class MovieListFragment: Fragment() {
 
         moviesAdapter = MoviesAdapter(
             myDataSet = mutableListOf(),
-            movieOnClick = ::movieOnClick,
-            addToFavoritesOnClick = ::addToFavoritesOnClick
+            movieOnClick = ::movieOnClick
         )
 
         gridManager = GridLayoutManager(activity as Context, 1)
@@ -92,10 +91,6 @@ class MovieListFragment: Fragment() {
                 gridManager.spanCount = 1
             }
         }
-    }
-
-    private fun addToFavoritesOnClick() {
-        TODO("Not yet implemented")
     }
 
     private fun movieOnClick(movieId: Int) {

@@ -10,11 +10,15 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.core.navigation.NavPaths
 import com.example.movies_search_presentation.R
 import com.example.movies_search_presentation.databinding.FragmentMoviesSearchBinding
 import com.example.movies_search_presentation.viewModel.MovieSearchViewModel
@@ -45,11 +49,11 @@ class MovieSearchFragment: Fragment() {
                 MovieSearchScreen(
                     modifier = Modifier.fillMaxSize(),
                     moviesSearchViewModel = viewModel,
-                    favoriteButtonClicked = { state, id ->
-
-                    },
                     movieClick = {
-
+                        val request = NavDeepLinkRequest.Builder
+                            .fromUri(NavPaths.concatenateMovieId(it).toUri())
+                            .build()
+                        findNavController().navigate(request)
                     }
                 )
             }

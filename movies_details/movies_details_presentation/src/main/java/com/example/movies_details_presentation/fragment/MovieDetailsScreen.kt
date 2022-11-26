@@ -158,8 +158,10 @@ fun MovieTopHolderDetails(
                 .data(IMAGE_BASE_URL + movie.poster_path)
                 .crossfade(true)
                 .build(),
+            placeholder = painterResource(R.drawable.placeholder),
             contentDescription = "",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.placeholder)
         )
         Column(
             modifier = Modifier
@@ -317,7 +319,8 @@ fun CrewAndCastLazyRow(
                         .build(),
                     placeholder = painterResource(R.drawable.placeholder),
                     contentDescription = "",
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    error = painterResource(R.drawable.placeholder)
                 )
                 Text(
                     modifier = Modifier
@@ -405,7 +408,8 @@ fun MovieSimpleItem(
                 .build(),
             placeholder = painterResource(R.drawable.placeholder),
             contentDescription = "",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.placeholder)
         )
         Text(
             modifier = Modifier

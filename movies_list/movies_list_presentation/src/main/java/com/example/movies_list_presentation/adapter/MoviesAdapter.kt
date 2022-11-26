@@ -12,8 +12,7 @@ import com.example.retrofit.util.IMAGE_BASE_URL
 
 class MoviesAdapter(
     val myDataSet: MutableList<Movie>,
-    val movieOnClick: (Int) -> Unit,
-    val addToFavoritesOnClick: () -> Unit
+    val movieOnClick: (Int) -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun updateList(newDataSet: List<Movie>) {
@@ -31,9 +30,6 @@ class MoviesAdapter(
             )),
             movieOnClick = {
                 movieOnClick(it)
-            },
-            addToFavoritesOnClick = {
-                addToFavoritesOnClick()
             }
         )
     }
@@ -47,8 +43,7 @@ class MoviesAdapter(
 
     class MovieItemViewHolder(
         val itemBinding: LinearVerticalMovieBinding,
-        val movieOnClick: (Int) -> Unit,
-        val addToFavoritesOnClick: () -> Unit
+        val movieOnClick: (Int) -> Unit
     ): RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(movie: Movie) {

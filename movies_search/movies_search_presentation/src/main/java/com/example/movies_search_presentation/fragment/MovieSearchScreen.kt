@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -26,23 +25,20 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.core.dtoMovies.Movie
 import com.example.core.dtoMovies.Movies
-import com.example.core_ui.components.FavoriteToggleButton
+import com.example.core_ui.R
 import com.example.movies_search_presentation.viewModel.MovieSearchViewModel
 import com.example.retrofit.util.IMAGE_BASE_URL
-import com.example.core_ui.R
+
 
 @Composable
 fun MovieSearchScreen(
     modifier: Modifier,
     moviesSearchViewModel: MovieSearchViewModel,
-    favoriteButtonClicked: (Boolean, Int) -> Unit,
     movieClick: (Int) -> Unit
 ) {
     val movies by moviesSearchViewModel.moviesResultLiveData.observeAsState(initial = Movies())
 
     val textColor = colorResource(id = R.color.text_dark)
-
-    val checkedState by moviesSearchViewModel.isMovieInFavoritesFlow.collectAsState(initial = false)
 
     Column(
         modifier = modifier
@@ -50,10 +46,6 @@ fun MovieSearchScreen(
         SearchMoviesResult(
             textColor = textColor,
             movies = movies,
-            favoriteButtonClicked = { state, id ->
-                favoriteButtonClicked(state, id)
-            },
-            checkedState = checkedState,
             movieClick = {
                 movieClick(it)
             }
@@ -65,8 +57,6 @@ fun MovieSearchScreen(
 fun SearchMoviesResult(
     textColor: Color,
     movies: Movies,
-    favoriteButtonClicked: (Boolean, Int) -> Unit,
-    checkedState: Boolean,
     movieClick: (Int) -> Unit
 ) {
 
@@ -81,8 +71,6 @@ fun SearchMoviesResult(
 
             MovieSimpleItem(
                 movieClick,
-                favoriteButtonClicked,
-                checkedState,
                 textColor,
                 item
             )
@@ -97,8 +85,6 @@ fun SearchMoviesResult(
 @Composable
 fun MovieSimpleItem(
     movieClick: (Int) -> Unit,
-    favoriteButtonClicked: (Boolean, Int) -> Unit,
-    checkedState: Boolean,
     textColor: Color,
     movie: Movie
 )
@@ -128,7 +114,8 @@ fun MovieSimpleItem(
                 .build(),
             placeholder = painterResource(R.drawable.placeholder),
             contentDescription = "",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.placeholder)
         )
         Column(
             modifier = Modifier
@@ -147,11 +134,15 @@ fun MovieSimpleItem(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
+            val releaseDateSplit = movie.release_date.split("-")
             Text(
                 modifier = Modifier
                     .wrapContentHeight()
                     .wrapContentWidth(),
-                text = movie.release_date,
+                text = if(releaseDateSplit.size == 3)
+                    releaseDateSplit[0]
+                else
+                    movie.release_date,
                 color = textColor,
                 textAlign = TextAlign.Center,
                 fontSize = 12.sp,
@@ -159,15 +150,9 @@ fun MovieSimpleItem(
             )
         }
 
-        FavoriteToggleButton(
-            modifier = Modifier.fillMaxWidth(0.5f),
-            checkedState,
-            favoriteButtonClicked = {
-                favoriteButtonClicked(it, movie.id)
-            }
-        )
-
-        Spacer(modifier = Modifier.height(1.dp).width(16.dp))
+        Spacer(modifier = Modifier
+            .height(1.dp)
+            .width(16.dp))
 
     }
 }
