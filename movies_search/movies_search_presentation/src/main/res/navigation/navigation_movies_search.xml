@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movies_search_navigation"
+    app:startDestination="@+id/movies_search_fragment">
+
+    <fragment
+        android:id="@+id/movies_search_fragment"
+        android:name="com.example.movies_search_presentation.fragment.MovieSearchFragment"
+        android:label="search_fragment"
+        tools:layout="@layout/fragment_movies_search">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="moviesDbApp://movie_search" />
+    </fragment>
+
+</navigation>

@@ -6,6 +6,10 @@ object NavPaths {
     const val moviesListPath = "$pathPrefix$moviesList"
     const val moviesDetails = "movie_detail"
     const val moviesDetailsPath = "$pathPrefix$moviesDetails"
+    const val moviesSearch = "movie_search"
+    const val moviesSearchPath = "$pathPrefix$moviesSearch"
+    const val moviesFavorites = "movie_favorites"
+    const val moviesFavoritesPath = "$pathPrefix$moviesFavorites"
 
 
     fun concatenateMovieId(movieId: Int): String = "${moviesDetailsPath}/$movieId"

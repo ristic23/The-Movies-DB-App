@@ -1,5 +1,5 @@
 apply {
-    from("$rootDir/base-module.gradle")
+    from("$rootDir/compose-module.gradle")
 }
 
 dependencies {
@@ -7,4 +7,7 @@ dependencies {
     "implementation"(project(Modules.moviesSearchDomain))
 
     "implementation"(Coil.coilCompose)
+
+    "implementation"(project(Modules.repositoryRemote))
+    "implementation"(project(Modules.repositoryRetrofit))
 }

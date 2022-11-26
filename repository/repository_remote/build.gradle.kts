@@ -5,5 +5,6 @@ apply {
 dependencies {
     "implementation"(project(Modules.core))
     "implementation"(project(Modules.repositoryRetrofit))
+    "implementation"(project(Modules.repositoryRoomDb))
 
 }

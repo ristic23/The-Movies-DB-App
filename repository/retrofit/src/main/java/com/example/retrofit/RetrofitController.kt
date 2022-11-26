@@ -2,7 +2,9 @@ package com.example.retrofit
 
 import com.example.retrofit.dto.RetrofitMovie
 import com.example.retrofit.dto.RetrofitMovies
+import com.example.retrofit.dto.crewAndCast.RetrofitCastAndCrew
 import com.example.retrofit.dto.detailMovie.RetrofitDetailsMovie
+import com.example.retrofit.dto.movieRecommendations.RetrofitMovieRecommendation
 import com.example.retrofit.util.BASE_URL
 import com.example.retrofit.util.MOVIES_API_KEY
 import com.squareup.moshi.JsonAdapter
@@ -117,9 +119,62 @@ class RetrofitController @Inject constructor(
         return listOf()
     }
 
-    suspend fun getSimilarMovies(moviesId: Int): List<RetrofitMovies> {
-        val result = iRetrofit.getSimilarMovies(moviesId = moviesId)
-        return listOf()
+    suspend fun getMovieRecommendations(moviesId: Int): RetrofitMovieRecommendation {
+        return  try {
+            val response = iRetrofit.getMoviesDetails(
+                "${BASE_URL}${moviesId}/recommendations?api_key=$MOVIES_API_KEY&language=en-US"
+            )
+            if(response.isSuccessful)
+            {
+                val moshi: Moshi = Moshi.Builder().build()
+                val type: Type = Types.newParameterizedType(RetrofitMovieRecommendation::class.java, RetrofitMovieRecommendation::class.java)
+                val jsonAdapter: JsonAdapter<RetrofitMovieRecommendation> = moshi.adapter(type)
+                response.body()?.let {
+                    val responseString = it.string()
+                    val finalResult: RetrofitMovieRecommendation = jsonAdapter.fromJson(responseString) ?: RetrofitMovieRecommendation()
+                    return finalResult
+                }
+                RetrofitMovieRecommendation()
+            }
+            else
+            {
+                RetrofitMovieRecommendation()
+            }
+        }
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+            RetrofitMovieRecommendation()
+        }
+    }
+
+    suspend fun getMovieCastAndCrew(moviesId: Int): RetrofitCastAndCrew {
+        return  try {
+            val response = iRetrofit.getMoviesDetails(
+                "${BASE_URL}${moviesId}/credits?api_key=$MOVIES_API_KEY&language=en-US"
+            )
+            if(response.isSuccessful)
+            {
+                val moshi: Moshi = Moshi.Builder().build()
+                val type: Type = Types.newParameterizedType(RetrofitCastAndCrew::class.java, RetrofitCastAndCrew::class.java)
+                val jsonAdapter: JsonAdapter<RetrofitCastAndCrew> = moshi.adapter(type)
+                response.body()?.let {
+                    val responseString = it.string()
+                    val finalResult: RetrofitCastAndCrew = jsonAdapter.fromJson(responseString) ?: RetrofitCastAndCrew()
+                    return finalResult
+                }
+                RetrofitCastAndCrew()
+            }
+            else
+            {
+                RetrofitCastAndCrew()
+            }
+        }
+        catch (e: Exception)
+        {
+            e.printStackTrace()
+            RetrofitCastAndCrew()
+        }
     }
 
 

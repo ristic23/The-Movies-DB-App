@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movies_favorites_navigation"
+    app:startDestination="@+id/movies_favorites_fragment">
+
+    <fragment
+        android:id="@+id/movies_favorites_fragment"
+        android:name="com.example.movies_favorites_presentation.fragment.MoviesFavoriteFragment"
+        android:label="favorites_fragment"
+        tools:layout="@layout/fragment_movies_favorites">
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="moviesDbApp://movie_favorites" />
+    </fragment>
+
+</navigation>

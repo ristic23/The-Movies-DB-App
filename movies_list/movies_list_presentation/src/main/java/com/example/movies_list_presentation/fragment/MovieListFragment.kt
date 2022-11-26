@@ -13,6 +13,8 @@ import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.core.navigation.NavPaths.concatenateMovieId
+import com.example.core.navigation.NavPaths.moviesFavoritesPath
+import com.example.core.navigation.NavPaths.moviesSearchPath
 import com.example.movies_list_presentation.R
 import com.example.movies_list_presentation.adapter.MoviesAdapter
 import com.example.movies_list_presentation.databinding.FragmentMoviesListBinding
@@ -27,6 +29,7 @@ class MovieListFragment: Fragment() {
     private lateinit var binding: FragmentMoviesListBinding
 
     private lateinit var moviesAdapter: MoviesAdapter
+    private lateinit var gridManager: GridLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,22 +59,39 @@ class MovieListFragment: Fragment() {
         moviesAdapter = MoviesAdapter(
             myDataSet = mutableListOf(),
             movieOnClick = ::movieOnClick,
-            addToFavoritesOnClick = ::addToFavoritesOnClick,
-            removeFromFavoritesOnClick = ::removeFromFavoritesOnClick
+            addToFavoritesOnClick = ::addToFavoritesOnClick
         )
 
+        gridManager = GridLayoutManager(activity as Context, 1)
         binding.movies.apply {
             adapter = moviesAdapter
-            layoutManager = GridLayoutManager(activity as Context, 1)
+            layoutManager = gridManager
         }
 
         viewModel.moviesResultLiveData.observe(viewLifecycleOwner) {
             moviesAdapter.updateList(it.retrofitMovies)
         }
-    }
 
-    private fun removeFromFavoritesOnClick() {
-        TODO("Not yet implemented")
+        binding.search.setOnClickListener {
+            val request = NavDeepLinkRequest.Builder
+                .fromUri(moviesSearchPath.toUri())
+                .build()
+            findNavController().navigate(request)
+        }
+        binding.favorites.setOnClickListener {
+            val request = NavDeepLinkRequest.Builder
+                .fromUri(moviesFavoritesPath.toUri())
+                .build()
+            findNavController().navigate(request)
+        }
+
+        binding.linearGridBtn.setOnClickListener {
+            if (binding.linearGridBtn.isChecked) {
+                gridManager.spanCount = 2
+            } else {
+                gridManager.spanCount = 1
+            }
+        }
     }
 
     private fun addToFavoritesOnClick() {

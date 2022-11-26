@@ -9,8 +9,8 @@
 
     <include app:graph="@navigation/navigation_movies_list" />
 
-<!--    <include app:graph="@navigation/navigation_movies_favorites" />-->
+    <include app:graph="@navigation/navigation_movies_favorites" />
 
-<!--    <include app:graph="@navigation/navigation_movies_search" />-->
+    <include app:graph="@navigation/navigation_movies_search" />
 
 </navigation>

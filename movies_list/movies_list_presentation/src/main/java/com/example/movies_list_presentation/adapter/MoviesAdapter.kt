@@ -13,8 +13,7 @@ import com.example.retrofit.util.IMAGE_BASE_URL
 class MoviesAdapter(
     val myDataSet: MutableList<Movie>,
     val movieOnClick: (Int) -> Unit,
-    val addToFavoritesOnClick: () -> Unit,
-    val removeFromFavoritesOnClick: () -> Unit
+    val addToFavoritesOnClick: () -> Unit
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun updateList(newDataSet: List<Movie>) {
@@ -35,9 +34,6 @@ class MoviesAdapter(
             },
             addToFavoritesOnClick = {
                 addToFavoritesOnClick()
-            },
-            removeFromFavoritesOnClick = {
-                removeFromFavoritesOnClick()
             }
         )
     }
@@ -52,15 +48,13 @@ class MoviesAdapter(
     class MovieItemViewHolder(
         val itemBinding: LinearVerticalMovieBinding,
         val movieOnClick: (Int) -> Unit,
-        val addToFavoritesOnClick: () -> Unit,
-        val removeFromFavoritesOnClick: () -> Unit
+        val addToFavoritesOnClick: () -> Unit
     ): RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(movie: Movie) {
             itemBinding.movieTitle.text = movie.title
             itemBinding.moviePopularity.text = "(${movie.popularity})"
             itemBinding.movieVote.text = movie.vote_average.toString()
-            itemBinding.movieGenre.text = concatenateNumbers(movie.genre_ids)
             itemBinding.movieDesc.text = movie.overview
             Glide.with(itemBinding.movieImage.context).load(IMAGE_BASE_URL + movie.poster_path).thumbnail(0.1f)
                 .transition(withCrossFade()).into(itemBinding.movieImage)
@@ -72,13 +66,6 @@ class MoviesAdapter(
 
         }
 
-        private fun concatenateNumbers(genreIds: List<Int>): String {
-            var returnValue = ""
-            genreIds.forEach {
-                returnValue += "$it "
-            }
-            return returnValue
-        }
     }
 
 }
