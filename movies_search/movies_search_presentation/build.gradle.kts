@@ -4,6 +4,7 @@ apply {
 
 dependencies {
     "implementation"(project(Modules.core))
+    "implementation"(project(Modules.coreUI))
     "implementation"(project(Modules.moviesSearchDomain))
 
     "implementation"(Coil.coilCompose)

@@ -14,7 +14,7 @@ interface IRepositoryMovies {
 
     suspend fun getMovieDetails(moviesId: Int): DetailsMovie
 
-    suspend fun searchMovies()
+    suspend fun searchMovies(query: String): Movies
 
     suspend fun getMovieCastCrew(moviesId: Int): MovieCastAndCrew
 

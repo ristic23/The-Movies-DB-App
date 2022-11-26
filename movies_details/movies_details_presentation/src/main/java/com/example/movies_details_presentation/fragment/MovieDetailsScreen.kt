@@ -1,7 +1,5 @@
 package com.example.movies_details_presentation.fragment
 
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -9,13 +7,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -41,6 +35,7 @@ import com.example.core.dtoMovies.detailMovie.DetailsMovie
 import com.example.core.dtoMovies.recommendations.RecommendationMovie
 import com.example.core.dtoMovies.recommendations.RecommendationMovies
 import com.example.core_ui.R
+import com.example.core_ui.components.FavoriteToggleButton
 import com.example.core_ui.components.ResponsiveText
 import com.example.movies_details_presentation.viewModel.MoviesDetailsViewModel
 import com.example.retrofit.util.CAST_CREW_IMAGE_BASE_URL
@@ -224,6 +219,7 @@ fun MovieTopHolderDetails(
             verticalArrangement = Arrangement.Bottom
         ) {
             FavoriteToggleButton(
+                modifier = Modifier.width(35.dp),
                 checkedState,
                 favoriteButtonClicked = {
                     favoriteButtonClicked(it, movie.id)
@@ -434,34 +430,7 @@ fun MovieSimpleItem(
     }
 }
 
-@Composable
-fun FavoriteToggleButton(
-    checkedState: Boolean,
-    favoriteButtonClicked: (Boolean) -> Unit
-) {
 
-    IconToggleButton(
-        checked = checkedState,
-        onCheckedChange = {
-//            checkedState.value = !checkedState.value
-            favoriteButtonClicked(!checkedState)
-        },
-        modifier = Modifier.fillMaxWidth().aspectRatio(1f)
-    ) {
-        val transition = updateTransition(checkedState, label = "")
-
-        val tint by transition.animateColor(label = "iconColor") { isChecked ->
-            if (isChecked) Color.Red else Color.Black
-        }
-
-        Icon(
-            imageVector = if (checkedState) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-            contentDescription = "Icon",
-            tint = tint,
-            modifier = Modifier.fillMaxWidth().aspectRatio(1f)
-        )
-    }
-}
 
 private fun emptyDetailMovie(): DetailsMovie = DetailsMovie(
     "",

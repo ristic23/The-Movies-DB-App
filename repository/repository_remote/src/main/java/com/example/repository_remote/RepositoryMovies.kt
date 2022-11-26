@@ -28,8 +28,9 @@ class RepositoryMovies @Inject constructor(
         return retrofitMovieDetailToMovieDetail(result)
     }
 
-    override suspend fun searchMovies() {
-        TODO("Not yet implemented")
+    override suspend fun searchMovies(query: String): Movies {
+        val result = retrofitController.searchMovies(query)
+        return retrofitMoviesToMovies(result)
     }
 
     override suspend fun getMovieCastCrew(moviesId: Int):MovieCastAndCrew {

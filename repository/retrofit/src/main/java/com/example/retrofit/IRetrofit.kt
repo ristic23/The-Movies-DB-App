@@ -31,11 +31,10 @@ interface IRetrofit {
         @Url endPointUrl: String
     ): Response<ResponseBody>
 
-
-    @GET("https://api.themoviedb.org/3/search/movie?api_key={api_key}&language=en-US&page=1&include_adult=false")
+    @GET
     suspend fun searchMovies(
-        @Path("api_key") api_key: String = MOVIES_API_KEY,
-        @Path("query") query: String
+        @Url endPointUrl: String
     ): Response<ResponseBody>
+
 
 }
