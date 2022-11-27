@@ -4,9 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.map
+import com.example.core.dtoMovies.Movie
 import com.example.core.dtoMovies.Movies
+import com.example.core.dtoMovies.castAndCrew.MovieCastAndCrew
 import com.example.repository_remote.IRepositoryMovies
+import com.example.repository_remote.mapper.retrofitMovieEntityToMovie
+import com.example.roomdb.entities.MovieEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,14 +28,20 @@ class MoviesListViewModel @Inject constructor(
     private val moviesResult = MutableLiveData<Movies>()
     val moviesResultLiveData: LiveData<Movies> get() = moviesResult
 
-    init {
-        getMovies()
-    }
+    private val moviesResultMutableFlow = MutableStateFlow<PagingData<Movie>?>(null)
+    val moviesResultFlow: StateFlow<PagingData<Movie>?> get() = moviesResultMutableFlow
 
-    private fun getMovies() {
+
+    fun getMovies() {
         viewModelScope.launch {
-            val topRated = repositoryMovies.getTopRatedMovies()
-            moviesResult.postValue(topRated)
+//            val topRated = repositoryMovies.getTopRatedMovies(1)
+//            moviesResult.postValue(topRated)
+
+            repositoryMovies.getTopRatedMoviesPaging().collectLatest {
+                moviesResultMutableFlow.value = it.map { movieEntity ->
+                    retrofitMovieEntityToMovie(movieEntity)
+                }
+            }
         }
     }
 

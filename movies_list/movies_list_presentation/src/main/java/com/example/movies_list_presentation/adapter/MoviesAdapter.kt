@@ -1,27 +1,25 @@
 package com.example.movies_list_presentation.adapter
 
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.example.movies_list_presentation.databinding.LinearVerticalMovieBinding
 import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.example.core.dtoMovies.Movie
-import com.example.retrofit.util.BASE_URL
+import com.example.movies_list_presentation.databinding.LinearVerticalMovieBinding
 import com.example.retrofit.util.IMAGE_BASE_URL
 
 class MoviesAdapter(
-    val myDataSet: MutableList<Movie>,
+//    val myDataSet: MutableList<Movie>,
     val movieOnClick: (Int) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): PagingDataAdapter<Movie, MoviesAdapter.MovieItemViewHolder>(MoviesDiffUtil())
+//    RecyclerView.Adapter<RecyclerView.ViewHolder>()
+{
 
-    fun updateList(newDataSet: List<Movie>) {
-        myDataSet.clear()
-        myDataSet.addAll(newDataSet)
-        notifyDataSetChanged()
-    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
         return MovieItemViewHolder(
             itemBinding = (LinearVerticalMovieBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -34,12 +32,10 @@ class MoviesAdapter(
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewHolder = holder as MovieItemViewHolder
-        viewHolder.bind(myDataSet[position])
+    override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
+        getItem(position)?.let { holder.bind(it) }
     }
 
-    override fun getItemCount(): Int = myDataSet.size
 
     class MovieItemViewHolder(
         val itemBinding: LinearVerticalMovieBinding,

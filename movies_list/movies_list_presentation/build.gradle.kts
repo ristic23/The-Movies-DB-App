@@ -8,9 +8,13 @@ dependencies {
 
     "implementation"(project(Modules.repositoryRemote))
     "implementation"(project(Modules.repositoryRetrofit))
+    "implementation"(project(Modules.repositoryRoomDb))
 
     "implementation"(project(Modules.moviesListDomain))
 
     "implementation"(Glide.glide)
     "implementation"(Glide.kaptGlide)
+
+    "implementation"(Paging.paging)
+
 }

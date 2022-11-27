@@ -18,10 +18,10 @@ class RetrofitController @Inject constructor(
 )
 {
 
-    suspend fun getTopRatedMovies(): RetrofitMovies {
+    suspend fun getTopRatedMovies(page: Int): RetrofitMovies {
         return  try {
             val response = iRetrofit.getTopRatedMovies(
-                "${BASE_URL}top_rated?api_key=$MOVIES_API_KEY&language=en-US&page=1"
+                "${BASE_URL}top_rated?api_key=$MOVIES_API_KEY&language=en-US&page=$page"
             )
             if(response.isSuccessful)
             {

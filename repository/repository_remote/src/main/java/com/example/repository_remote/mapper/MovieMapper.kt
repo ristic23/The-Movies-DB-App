@@ -19,6 +19,7 @@ import com.example.retrofit.dto.detailMovie.RetrofitDetailsMovie
 import com.example.retrofit.dto.movieRecommendations.RetrofitMovieRecommendation
 import com.example.retrofit.dto.movieRecommendations.RetrofitRecommendationResult
 import com.example.roomdb.entities.FavoriteEntity
+import com.example.roomdb.entities.MovieEntity
 
 fun retrofitMoviesToMovies(retrofitMovies: RetrofitMovies):Movies = Movies(
     page = retrofitMovies.page,
@@ -42,6 +43,36 @@ fun retrofitMovieToMovie(retrofitMovie: RetrofitMovie?): Movie = Movie(
     title = retrofitMovie?.title ?: "",
     vote_average = retrofitMovie?.vote_average ?: 0.0,
     vote_count = retrofitMovie?.vote_count ?: 0
+)
+
+fun retrofitMovieEntityToMovie(movieEntity: MovieEntity?): Movie = Movie(
+    backdrop_path = movieEntity?.backdrop_path ?: "",
+    genre_ids = listOf(),
+    id = movieEntity?.id ?: 0,
+    original_language = movieEntity?.original_language ?: "",
+    overview = movieEntity?.overview ?: "",
+    popularity = movieEntity?.popularity ?: 0.0,
+    poster_path = movieEntity?.poster_path ?: "",
+    release_date = movieEntity?.release_date ?: "",
+    title = movieEntity?.title ?: "",
+    vote_average = movieEntity?.vote_average ?: 0.0,
+    vote_count = movieEntity?.vote_count ?: 0
+)
+
+fun retrofitMovieToMovieEntity(retrofitMovie: RetrofitMovie?): MovieEntity = MovieEntity(
+    backdrop_path = retrofitMovie?.backdrop_path ?: "",
+    id = retrofitMovie?.id ?: 0,
+    original_language = retrofitMovie?.original_language ?: "",
+    overview = retrofitMovie?.overview ?: "",
+    popularity = retrofitMovie?.popularity ?: 0.0,
+    poster_path = retrofitMovie?.poster_path ?: "",
+    release_date = retrofitMovie?.release_date ?: "",
+    title = retrofitMovie?.title ?: "",
+    vote_average = retrofitMovie?.vote_average ?: 0.0,
+    vote_count = retrofitMovie?.vote_count ?: 0,
+    adult = retrofitMovie?.adult ?: false,
+    original_title = retrofitMovie?.original_title ?: "",
+    video = retrofitMovie?.video ?: false,
 )
 
 fun retrofitMovieDetailToMovieDetail(retrofitMovie: RetrofitDetailsMovie?): DetailsMovie = DetailsMovie(

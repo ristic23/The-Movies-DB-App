@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,8 @@ import com.example.movies_list_presentation.adapter.MoviesAdapter
 import com.example.movies_list_presentation.databinding.FragmentMoviesListBinding
 import com.example.movies_list_presentation.viewModel.MoviesListViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieListFragment: Fragment() {
@@ -57,7 +60,6 @@ class MovieListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         moviesAdapter = MoviesAdapter(
-            myDataSet = mutableListOf(),
             movieOnClick = ::movieOnClick
         )
 
@@ -65,10 +67,19 @@ class MovieListFragment: Fragment() {
         binding.movies.apply {
             adapter = moviesAdapter
             layoutManager = gridManager
+            setHasFixedSize(true)
         }
+        viewModel.getMovies()
+//        viewModel.moviesResultLiveData.observe(viewLifecycleOwner) {
+//            moviesAdapter.submitData(it.retrofitMovies)
+//        }
 
-        viewModel.moviesResultLiveData.observe(viewLifecycleOwner) {
-            moviesAdapter.updateList(it.retrofitMovies)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.moviesResultFlow.collectLatest {
+                it?.let { data ->
+                    moviesAdapter.submitData(data)
+                }
+            }
         }
 
         binding.search.setOnClickListener {

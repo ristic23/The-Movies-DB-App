@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.roomdb.Database
 import com.example.roomdb.dao.FavoriteDAO
+import com.example.roomdb.dao.MovieDAO
+import com.example.roomdb.dao.MovieRemoteKeysDAO
 import com.example.roomdb.utils.APPLICATION_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
@@ -20,6 +22,14 @@ object DatabaseModule {
     @Provides
     fun provideSavedReadingDao(database: Database): FavoriteDAO =
         database.getFavoriteDao()
+
+    @Provides
+    fun provideMovieDao(database: Database): MovieDAO =
+        database.getMovieDao()
+
+    @Provides
+    fun provideMovieRemoteKeysDao(database: Database): MovieRemoteKeysDAO =
+        database.getRemoteKeysDao()
 
     @Provides
     @Singleton
