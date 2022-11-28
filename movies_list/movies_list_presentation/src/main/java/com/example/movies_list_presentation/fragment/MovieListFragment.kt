@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.findNavController
+import androidx.paging.cachedIn
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.core.navigation.NavPaths.concatenateMovieId
 import com.example.core.navigation.NavPaths.moviesFavoritesPath
@@ -64,23 +65,27 @@ class MovieListFragment: Fragment() {
         )
 
         gridManager = GridLayoutManager(activity as Context, 1)
-        binding.movies.apply {
+        binding.moviesRV.setHasFixedSize(true)
+        binding.moviesRV.apply {
             adapter = moviesAdapter
             layoutManager = gridManager
             setHasFixedSize(true)
         }
-        viewModel.getMovies()
-//        viewModel.moviesResultLiveData.observe(viewLifecycleOwner) {
-//            moviesAdapter.submitData(it.retrofitMovies)
-//        }
-
+        binding.moviesRV.setHasFixedSize(true)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.moviesResultFlow.collectLatest {
-                it?.let { data ->
-                    moviesAdapter.submitData(data)
-                }
+            viewModel.getMovies().collectLatest {
+                moviesAdapter.submitData(it)
             }
         }
+
+//        binding.movies.setContent {
+//            MovieListScreen(
+//                moviesListViewModel = viewModel,
+//                movieClicked =  {
+//                    movieOnClick(it)
+//                }
+//            )
+//        }
 
         binding.search.setOnClickListener {
             val request = NavDeepLinkRequest.Builder

@@ -16,5 +16,7 @@ dependencies {
     "implementation"(Glide.kaptGlide)
 
     "implementation"(Paging.paging)
+    "implementation"(Paging.pagingCompose)
+    "implementation"(Coil.coilCompose)
 
 }

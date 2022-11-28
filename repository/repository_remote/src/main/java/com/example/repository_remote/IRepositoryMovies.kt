@@ -1,6 +1,7 @@
 package com.example.repository_remote
 
 import androidx.paging.*
+import com.example.core.dtoMovies.Movie
 import com.example.core.dtoMovies.Movies
 import com.example.core.dtoMovies.castAndCrew.MovieCastAndCrew
 import com.example.core.dtoMovies.detailMovie.DetailsMovie
@@ -33,5 +34,5 @@ interface IRepositoryMovies {
     suspend fun getFavoritesSpecific(movieId : Int): MovieFavorite?
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getTopRatedMoviesPaging(): Flow<PagingData<MovieEntity>>
+    fun getTopRatedMoviesPaging(): Flow<PagingData<Movie>>
 }

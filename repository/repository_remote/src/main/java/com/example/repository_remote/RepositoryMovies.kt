@@ -1,9 +1,7 @@
 package com.example.repository_remote
 
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
+import androidx.paging.*
+import com.example.core.dtoMovies.Movie
 import com.example.core.dtoMovies.Movies
 import com.example.core.dtoMovies.castAndCrew.MovieCastAndCrew
 import com.example.core.dtoMovies.detailMovie.DetailsMovie
@@ -17,6 +15,7 @@ import com.example.roomdb.DatabaseImpl
 import com.example.roomdb.entities.MovieEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RepositoryMovies @Inject constructor(
@@ -26,20 +25,25 @@ class RepositoryMovies @Inject constructor(
 {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getTopRatedMoviesPaging(): Flow<PagingData<MovieEntity>> {
+    override fun getTopRatedMoviesPaging(): Flow<PagingData<Movie>> {
+        val pagingSourceFactory = { databaseImpl.getAllMovies() }
         val result = Pager(
             config = PagingConfig(
+
                 pageSize = ITEMS_PER_PAGE
             ),
             remoteMediator = MovieRemoteMediator(
                 retrofitController = retrofitController,
                 databaseImpl = databaseImpl
             ),
-            pagingSourceFactory = {
-                databaseImpl.getAllMovies()
+            pagingSourceFactory = pagingSourceFactory
+        ).flow
+        val temp = result.map { pagingData ->
+            pagingData.map { movieEntity->
+                retrofitMovieEntityToMovie(movieEntity)
             }
-        )
-        return result.flow
+        }
+        return temp
     }
 
     override suspend fun getTopRatedMovies(page: Int): Movies  {

@@ -1,5 +1,6 @@
 package com.example.repository_remote.paging
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -46,7 +47,7 @@ class MovieRemoteMediator @Inject constructor(
                 }
             }
 
-            val response = retrofitController.getTopRatedMovies(page = currentPage)//, perPage = ITEMS_PER_PAGE)
+            val response = retrofitController.getTopRatedMovies(page = currentPage)
             val endOfPaginationReached = response.retrofitMovies.isEmpty()
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
@@ -58,14 +59,15 @@ class MovieRemoteMediator @Inject constructor(
                     databaseImpl.deleteAllMovies()
                     databaseImpl.deleteAllRemoteKeys()
                 }
-                val keys = response.retrofitMovies.map { movie ->
+                val moviesList = response.retrofitMovies
+                val keys = moviesList.map { movie ->
                     MovieRemoteKeysEntity(
                         id = movie.id,
                         prevPage = prevPage,
                         nextPage = nextPage
                     )
                 }
-                val moviesEntities = response.retrofitMovies.map { movie ->
+                val moviesEntities = moviesList.map { movie ->
                     retrofitMovieToMovieEntity(movie)
                 }
                 databaseImpl.addAllRemoteKeys(remoteKeys = keys)

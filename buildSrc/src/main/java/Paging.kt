@@ -4,6 +4,7 @@ object Paging {
 
     const val paging = "androidx.paging:paging-runtime:$version"
     const val pagingRoom = "androidx.room:room-paging:$versionRoom"
+    const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha17"
 
 
 }
